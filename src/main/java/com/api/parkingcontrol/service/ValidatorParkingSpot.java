@@ -1,12 +1,18 @@
 package com.api.parkingcontrol.service;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.parkingcontrol.dto.ParkingSpotDto;
-import com.api.parkingcontrol.exception.InvalidParkingSpotException;
 import com.api.parkingcontrol.exception.ParkingSpotNotFoundException;
 import com.api.parkingcontrol.model.ParkingSpotModel;
+import com.api.parkingcontrol.validator.ApartmentBlock;
+import com.api.parkingcontrol.validator.LicensePlateCar;
+import com.api.parkingcontrol.validator.ParkingSpotNumber;
+import com.api.parkingcontrol.validator.ParkingSpotValidatorHandler;
 
 @Service
 public class ValidatorParkingSpot {
@@ -14,19 +20,17 @@ public class ValidatorParkingSpot {
 	@Autowired
 	private ParkingSpotService parkingSpotService;
 	
-	public void validate (ParkingSpotDto parkingSpotDto) {
+	public void validate(ParkingSpotDto parkingSpotDto) {		
 		
-		if (parkingSpotService.existsByLicensePlateCar(parkingSpotDto.getLicensePlateCar())) {
-			throw new InvalidParkingSpotException("Conflict: License Plate Car is already in use.");
-		}
+		List<ParkingSpotValidatorHandler> validations = Arrays.asList(new ParkingSpotNumber(), 
+															      	  new LicensePlateCar(), 
+															          new ApartmentBlock());
 		
-		if (parkingSpotService.existsByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())) {
-			throw new InvalidParkingSpotException("Conflict: Parking spot is already in use.");
-		}
+		validations.stream().forEach(rule -> {
+			rule.validateParkingCar(parkingSpotService, parkingSpotDto);
+			
+		});
 		
-		if (parkingSpotService.existsByApartmentAndBlock(parkingSpotDto.getApartment(), parkingSpotDto.getBlock())) {
-			throw new InvalidParkingSpotException("Conflict: Parking spot already registered for this apartment/block.");
-		}
 	}
 	
 	public ParkingSpotModel isParkingSpotValid(Integer id) throws Exception {
