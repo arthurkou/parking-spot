@@ -34,8 +34,7 @@ public class ParkingSpotController {
 	private ParkingSpotService parkingSpotService;
 	
 	@Autowired
-	private ValidatorParkingSpot validatorParkingSpot;
-	
+	private ValidatorParkingSpot validatorParkingSpot;	
 	
 	@GetMapping
 	public ResponseEntity<Page<ParkingSpotModel>> getAllParkingSpot(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
