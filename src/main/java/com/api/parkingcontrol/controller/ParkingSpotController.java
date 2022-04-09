@@ -66,6 +66,6 @@ public class ParkingSpotController {
 	public ResponseEntity<Object> deleteParkingSpot(@PathVariable Integer id) throws Exception {
 		
 		parkingSpotService.delete(validatorParkingSpot.isParkingSpotValid(id));
-		return ResponseEntity.status(HttpStatus.OK).body("Parking spot deleted successfully.");
+		return ResponseEntity.status(HttpStatus.OK).body("Parking spot deleted successfully..");
 	}	
 }
