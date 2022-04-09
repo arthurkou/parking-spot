@@ -39,7 +39,7 @@ public class ParkingSpotController {
 	@GetMapping
 	public ResponseEntity<Page<ParkingSpotModel>> getAllParkingSpot(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
-	}	
+	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getOneParkingSpot(@PathVariable Integer id) throws Exception {			
@@ -66,6 +66,6 @@ public class ParkingSpotController {
 	public ResponseEntity<Object> deleteParkingSpot(@PathVariable Integer id) throws Exception {
 		
 		parkingSpotService.delete(validatorParkingSpot.isParkingSpotValid(id));
-		return ResponseEntity.status(HttpStatus.OK).body("Parking spot deleted successfully.");
+		return ResponseEntity.status(HttpStatus.OK).body("Parking spot deleted successfully..");
 	}	
 }
