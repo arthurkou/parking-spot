@@ -27,8 +27,7 @@ public class Service_Test {
 	@Test
 	public void encontrarParkingSpotById() {		
 		
-		ParkingSpotModel model;
-		model = new ParkingSpotModel();
+		ParkingSpotModel model = new ParkingSpotModel();
 		when(ser.save(model)).thenReturn(model);
 	}
 

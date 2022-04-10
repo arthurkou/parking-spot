@@ -1,6 +1,7 @@
 package com.api.parkingcontrol.service;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -23,7 +24,7 @@ public class Service_IntegratedTes {
 	
 	@Autowired
 	private ParkingSpotService service;
-	
+
 	@MockBean
 	private ParkingSpotRepository repository;
 	
@@ -40,9 +41,8 @@ public class Service_IntegratedTes {
 		model.setBlock("S");
 		model.setResponsibleName("gfds");
 		model.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
-		
-		assertNotNull(service.save(model));
-		
+
+		service.save(model);
 	}
  
 }
